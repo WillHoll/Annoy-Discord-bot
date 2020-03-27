@@ -6,14 +6,28 @@ const client = new Discord.Client();
 
 // message commands
 client.on("message", message => {
-  //exit and stop if prefix is not present || stops botception
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  // stops botception
+  if (message.author.bot) return;
 
-  // identify target user within guild
-  if (message.content.startsWith(config.prefix + "BakeThePie")) {
+  if (message.content.startsWith(config.prefix + "test")) {
+    message.guild.roles.fetch().then(res => console.log(res))
+    const staffRole = message.guild.roles.find(role => role.name === "Staff Members");
 
+    if (!staffRole) 
+    return console.log("error finding role");
+
+    if (!message.member.roles.has(staffRole.id)) 
+    return message.reply("Staff only");
+
+    return config.pieBaker.pieToggle = !config.pieBaker.pieToggle
   }
+
+  if (message.author.username === 'Aye_Pie') {
+    console.log('hit')
+    return message.channel.send(`${message.author.username} is a bot. He'll steal your credit cards or some shit`);
+  }
+  
 })
 
 
-client.login(CLIENT_SECRET);
+client.login(config.token);
