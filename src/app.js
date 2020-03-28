@@ -17,8 +17,7 @@ fs.readdir("./src/events/", (err, files) => {
     const event = require(`./events/${file}`);
     //Get just the event name from the file name
     let eventName = file.split(".")[0];
-    // super-secret recipie to call events with all their proper arguments *after* the `client` var
-    // without going into too many detailsl, this means each event will be called with the client argument,
+    // each event will be called with the client argument,
     // followed by its "normal" arguments, like message, member, etc etc.
     client.on(eventName, event.bind(null, client));
   });
